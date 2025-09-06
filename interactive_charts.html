@@ -1,0 +1,390 @@
+<!DOCTYPE HTML>
+<!--
+	Interactive Charts - Seyhmus Guler
+	Using Plotly.js for data visualization
+-->
+<html>
+
+<head>
+	<title>Interactive Charts - Seyhmus Guler</title>
+	<meta charset="utf-8" />
+	<meta name="description" content="Interactive data visualizations and charts by Seyhmus Guler"/>
+	<meta name="author" content="Seyhmus Guler"/>
+	<meta name="keywords" content="seyhmus guler, data visualization, plotly, interactive charts, data science" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/academicons.min.css" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+	<!-- Plotly.js -->
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<!-- Custom styles for code blocks -->
+	<style>
+		pre {
+			background-color: #f4f4f4;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			padding: 15px;
+			overflow-x: auto;
+			font-size: 0.9em;
+			line-height: 1.4;
+		}
+		pre code {
+			background: none;
+			padding: 0;
+			border: none;
+			border-radius: 0;
+		}
+		.language-python {
+			border-left: 4px solid #3776ab;
+		}
+		.language-javascript {
+			border-left: 4px solid #f7df1e;
+		}
+		#howto ul li {
+			margin-bottom: 0.5em;
+		}
+	</style>
+</head>
+
+<body class="is-preload">
+
+	<!-- Header -->
+	<section id="header">
+		<header>
+			<span class="image avatar"><img src="images/avatar.jpg" alt="" /></span>
+			<h1 id="logo"><a href="index.html">Seyhmus Guler</a></h1>
+			<p>Interactive Charts & Visualizations</p>
+		</header>
+		<nav id="nav">
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="#howto" class="active">How-To</a></li>
+				<li><a href="#scatter">Scatter Plot</a></li>
+				<li><a href="#line">Line Chart</a></li>
+				<li><a href="#bar">Bar Chart</a></li>
+				<li><a href="#heatmap">Heatmap</a></li>
+			</ul>
+		</nav>
+		<footer>
+			<ul class="icons">
+				<li><a href="https://www.linkedin.com/in/seyhmusguler/" title="LinkedIn" 
+					   class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+				<li><a href="https://github.com/SeyhmusGuler" title="GitHub" 
+					   class="icon brands fa-github"><span class="label">Github</span></a></li>
+				<li><a href="https://bitbucket.org/SeyhmusGuler/" title="Bitbucket" 
+					   class="icon brands fa-bitbucket"><span class="label">Bitbucket</span></a></li>
+				<li><a href="https://scholar.google.com/citations?user=pslU9MgAAAAJ&hl=en&oi=ao" 
+					   title="Google Scholar" style="font-size: 1.25em; border: none;" 
+					   class="ai ai-google-scholar-square" target="_blank"></a></li>
+				<li><a href="mailto:seyhmusguler@gmail.com" title="Send me an email." 
+					   class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+			</ul>
+		</footer>
+	</section>
+
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Main -->
+		<div id="main">
+
+			<!-- Introduction -->
+			<section id="intro">
+				<div class="container">
+					<header class="major">
+						<h2>Interactive Data Visualizations</h2>
+						<p>Exploring data through interactive charts using Plotly.js</p>
+					</header>
+					<p>
+						This page demonstrates various interactive data visualizations created with Plotly.js. 
+						Each chart is fully interactive - you can zoom, pan, hover for details, and toggle data series. 
+						These examples showcase different types of visualizations commonly used in data science and research.
+					</p>
+				</div>
+			</section>
+
+			<!-- How-To Guide -->
+			<section id="howto">
+				<div class="container">
+					<h3><i class="fas fa-code"></i> Converting Python Plotly to JavaScript</h3>
+					<p>
+						If you're familiar with Python Plotly and want to create web-based interactive charts, 
+						here's how to convert your Python code to JavaScript Plotly.js:
+					</p>
+
+					<div class="row">
+						<div class="col-6 col-12-medium">
+							<h4>Method 1: Manual Translation</h4>
+							<p><strong>Python Code:</strong></p>
+							<pre><code class="language-python">import plotly.graph_objects as go
+
+fig = go.Figure(data=go.Scatter(
+    x=[1, 2, 3, 4],
+    y=[10, 11, 12, 13],
+    mode='markers+lines',
+    name='My Data'
+))
+
+fig.update_layout(
+    title='Sample Plot',
+    xaxis_title='X Values',
+    yaxis_title='Y Values'
+)
+
+fig.show()</code></pre>
+						</div>
+						<div class="col-6 col-12-medium">
+							<h4>&nbsp;</h4>
+							<p><strong>JavaScript Equivalent:</strong></p>
+							<pre><code class="language-javascript">const data = [{
+    x: [1, 2, 3, 4],
+    y: [10, 11, 12, 13],
+    mode: 'markers+lines',
+    name: 'My Data',
+    type: 'scatter'
+}];
+
+const layout = {
+    title: 'Sample Plot',
+    xaxis: { title: 'X Values' },
+    yaxis: { title: 'Y Values' }
+};
+
+Plotly.newPlot('myDiv', data, layout);</code></pre>
+						</div>
+					</div>
+
+					<h4>Method 2: Extract JSON from Python</h4>
+					<p>You can export your Python plot's configuration as JSON and use it directly in JavaScript:</p>
+					<pre><code class="language-python">import plotly.graph_objects as go
+import json
+
+# Create your plot
+fig = go.Figure(data=go.Scatter(x=[1, 2, 3, 4], y=[10, 11, 12, 13]))
+
+# Get the figure as a dictionary
+fig_dict = fig.to_dict()
+
+# Extract data and layout for JavaScript
+data = fig_dict['data']
+layout = fig_dict['layout']
+
+print("JavaScript data:", json.dumps(data, indent=2))
+print("JavaScript layout:", json.dumps(layout, indent=2))</code></pre>
+
+					<h4>Method 3: Export to HTML</h4>
+					<p>Export your Python plot to HTML and extract the JavaScript:</p>
+					<pre><code class="language-python">import plotly.graph_objects as go
+
+fig = go.Figure(data=go.Scatter(x=[1, 2, 3, 4], y=[10, 11, 12, 13]))
+
+# Export to HTML (without including plotly.js)
+html_str = fig.to_html(include_plotlyjs=False, div_id="myPlot")
+
+# Or get just the JSON representation
+json_str = fig.to_json()
+print(json_str)</code></pre>
+
+					<h4>Key Differences to Remember:</h4>
+					<ul>
+						<li><strong>Import:</strong> Python uses <code>import plotly.graph_objects as go</code>, 
+							JavaScript uses <code>&lt;script src="plotly.js"&gt;</code></li>
+						<li><strong>Data Structure:</strong> Python uses objects like <code>go.Scatter()</code>, 
+							JavaScript uses plain objects with <code>type: 'scatter'</code></li>
+						<li><strong>Layout Updates:</strong> Python uses <code>fig.update_layout()</code>, 
+							JavaScript defines layout directly in the object</li>
+						<li><strong>Display:</strong> Python uses <code>fig.show()</code>, 
+							JavaScript uses <code>Plotly.newPlot('div-id', data, layout)</code></li>
+					</ul>
+
+					<p>
+						<em>The examples below demonstrate various chart types that you can easily adapt 
+						from your Python Plotly code using these methods.</em>
+					</p>
+				</div>
+			</section>
+
+			<!-- Scatter Plot -->
+			<section id="scatter">
+				<div class="container">
+					<h3><i class="fas fa-chart-line"></i> Interactive Scatter Plot</h3>
+					<p>A scatter plot showing the relationship between two variables with interactive features.</p>
+					<div id="scatterPlot" style="width:100%;height:500px;"></div>
+				</div>
+			</section>
+
+			<!-- Line Chart -->
+			<section id="line">
+				<div class="container">
+					<h3><i class="fas fa-chart-line"></i> Time Series Line Chart</h3>
+					<p>A time series visualization with multiple data series that can be toggled on/off.</p>
+					<div id="linePlot" style="width:100%;height:500px;"></div>
+				</div>
+			</section>
+
+			<!-- Bar Chart -->
+			<section id="bar">
+				<div class="container">
+					<h3><i class="fas fa-chart-bar"></i> Interactive Bar Chart</h3>
+					<p>A bar chart comparing different categories with hover information.</p>
+					<div id="barPlot" style="width:100%;height:500px;"></div>
+				</div>
+			</section>
+
+			<!-- Heatmap -->
+			<section id="heatmap">
+				<div class="container">
+					<h3><i class="fas fa-th"></i> Correlation Heatmap</h3>
+					<p>A heatmap visualization showing correlations between different variables.</p>
+					<div id="heatmapPlot" style="width:100%;height:500px;"></div>
+				</div>
+			</section>
+
+		</div>
+
+		<!-- Footer -->
+		<section id="footer">
+			<div class="container">
+				<ul class="copyright">
+					<li>&copy; Seyhmus Guler</li>
+					<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					<li>Charts: <a href="https://plotly.com/javascript/">Plotly.js</a></li>
+				</ul>
+			</div>
+		</section>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+
+	<!-- Custom Chart Scripts -->
+	<script>
+		// Wait for the page to load before creating charts
+		document.addEventListener('DOMContentLoaded', function() {
+			
+			// 1. Scatter Plot
+			const scatterData = [{
+				x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+				y: [2, 5, 3, 8, 7, 6, 4, 9, 1, 10],
+				mode: 'markers',
+				type: 'scatter',
+				name: 'Dataset A',
+				marker: {
+					size: 12,
+					color: 'rgb(158,202,225)',
+					line: {
+						color: 'rgb(8,48,107)',
+						width: 1.5
+					}
+				}
+			}, {
+				x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+				y: [16, 18, 17, 19, 15, 14, 13, 16, 18, 20],
+				mode: 'markers',
+				type: 'scatter',
+				name: 'Dataset B',
+				marker: {
+					size: 12,
+					color: 'rgb(255,127,14)',
+					line: {
+						color: 'rgb(127,63,7)',
+						width: 1.5
+					}
+				}
+			}];
+
+			const scatterLayout = {
+				title: 'Sample Scatter Plot',
+				xaxis: { title: 'X Values' },
+				yaxis: { title: 'Y Values' },
+				hovermode: 'closest'
+			};
+
+			Plotly.newPlot('scatterPlot', scatterData, scatterLayout, {responsive: true});
+
+			// 2. Line Chart
+			const dates = ['2023-01', '2023-02', '2023-03', '2023-04', '2023-05', '2023-06', 
+						   '2023-07', '2023-08', '2023-09', '2023-10', '2023-11', '2023-12'];
+			
+			const lineData = [{
+				x: dates,
+				y: [20, 25, 30, 28, 35, 40, 45, 42, 38, 35, 30, 25],
+				mode: 'lines+markers',
+				name: 'Metric A',
+				line: { color: 'rgb(219, 64, 82)' }
+			}, {
+				x: dates,
+				y: [15, 20, 25, 30, 32, 35, 38, 40, 42, 38, 35, 30],
+				mode: 'lines+markers',
+				name: 'Metric B',
+				line: { color: 'rgb(55, 128, 191)' }
+			}];
+
+			const lineLayout = {
+				title: 'Time Series Comparison',
+				xaxis: { title: 'Time Period' },
+				yaxis: { title: 'Values' }
+			};
+
+			Plotly.newPlot('linePlot', lineData, lineLayout, {responsive: true});
+
+			// 3. Bar Chart
+			const barData = [{
+				x: ['Category A', 'Category B', 'Category C', 'Category D', 'Category E'],
+				y: [20, 35, 30, 25, 40],
+				type: 'bar',
+				marker: {
+					color: ['rgba(204,204,204,1)', 'rgba(222,45,38,0.8)', 'rgba(204,204,204,1)', 
+							'rgba(204,204,204,1)', 'rgba(204,204,204,1)']
+				}
+			}];
+
+			const barLayout = {
+				title: 'Category Comparison',
+				xaxis: { title: 'Categories' },
+				yaxis: { title: 'Values' }
+			};
+
+			Plotly.newPlot('barPlot', barData, barLayout, {responsive: true});
+
+			// 4. Heatmap
+			const heatmapData = [{
+				z: [[1, 20, 30, 50, 1], [20, 1, 60, 80, 30], [30, 60, 1, -10, 20], 
+					[50, 80, -10, 1, 40], [1, 30, 20, 40, 1]],
+				x: ['Variable 1', 'Variable 2', 'Variable 3', 'Variable 4', 'Variable 5'],
+				y: ['Variable 1', 'Variable 2', 'Variable 3', 'Variable 4', 'Variable 5'],
+				type: 'heatmap',
+				colorscale: 'RdBu',
+				zmid: 0
+			}];
+
+			const heatmapLayout = {
+				title: 'Correlation Matrix',
+				xaxis: { title: 'Variables' },
+				yaxis: { title: 'Variables' }
+			};
+
+			Plotly.newPlot('heatmapPlot', heatmapData, heatmapLayout, {responsive: true});
+		});
+	</script>
+
+	<!-- Footer -->
+	<footer style="text-align: center; padding: 2em 0; margin-top: 3em; border-top: 1px solid #ddd;">
+		<p style="margin: 0; font-size: 0.9em; color: #888;">
+			<em>This website is maintained with the assistance of AI tools to deliver updates more efficiently.</em>
+		</p>
+		<p style="margin: 0.5em 0 0 0; font-size: 0.8em; color: #aaa;">
+			&copy; Seyhmus Guler | <a href="index.html" style="color: #49bf9d;">Back to Main Site</a>
+		</p>
+	</footer>
+
+</body>
+
+</html>
